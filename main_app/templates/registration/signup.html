@@ -6,11 +6,10 @@
 
 <p class="red-text">{{ error_message }}</p>
 
-<form action="{% url 'signup' %}" method="POST">
+<form method="post">
     {% csrf_token %}
-    {{ form.as_p }}
-    <input type="hidden" name="next" value="{{ next }}">
-    <button type="submit" class="btn">Signup</button>
+    {{ user_form.as_p }}
+    {{ profile_form.as_p }}
+    <button type="submit">Signup</button>
 </form>
 {% endblock content %}
-    

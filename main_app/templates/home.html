@@ -6,11 +6,10 @@
 
     
     {% if user.is_authenticated %}
-    <form action="" method="POST">
+    <form method="post">
         {% csrf_token %}
-    
-        <input type="text" placeholder="content here">
-        <input type="submit" value="Submit!" class="btn">
+        {{ form.as_p }}
+        <button type="submit">Create Post</button>
     </form>
     {% endif %}
         
