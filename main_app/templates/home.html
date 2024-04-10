@@ -4,6 +4,19 @@
 {% block content %}
     <h1>Posts</h1>
 
+    
+    {% if user.is_authenticated %}
+    <form action="" method="POST">
+        {% csrf_token %}
+    
+        <input type="text" placeholder="content here">
+        <input type="submit" value="Submit!" class="btn">
+    </form>
+    {% endif %}
+        
+
+
+
 {% for post in posts %}
     <div>
         <p>
