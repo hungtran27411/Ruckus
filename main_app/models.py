@@ -7,5 +7,9 @@ class Profile(models.Model):
     bio = models.TextField(max_length=250)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.profile_name
+
 class Post(models.Model):
     content = models.TextField(max_length=256)
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
