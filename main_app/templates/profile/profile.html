@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+
+
+{% block content %}
+    
+
+
+
+<div>
+    <p>{{ profile.profile_name }}</p>
+</div>
+
+
+
+
+
+{% for post in posts %}
+    <div>
+        <p>
+            {{ post.content }}
+        </p>
+    </div>
+{% endfor %}
+    
+    
+    
+
+
+
+
+{% endblock content %}
+    

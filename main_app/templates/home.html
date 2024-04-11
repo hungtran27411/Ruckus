@@ -24,6 +24,7 @@
     
 <div>
     <p>
+        <a href="{% url 'profile_detail' profile_id=post.profile.id %}">profile</a>
         {{ post.content }}
         <a href="{% url 'update_post' pk=post.pk %}">edit</a>
     </p>
@@ -34,6 +35,7 @@
 
 <div>
     <p>
+        <a href="{% url 'profile_detail' profile_id=post.profile.id %}">profile</a>
         {{ post.content }}
         
     </p>

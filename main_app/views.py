@@ -63,3 +63,12 @@ class PostDelete(LoginRequiredMixin, DeleteView):
     model = Post
     template_name = 'edit.html'
     success_url = '/'
+
+
+def profile_detail(request, profile_id):
+    profile = Profile.objects.get(id=profile_id)
+    posts = Post.objects.filter(profile=profile)
+    return render(request, 'profile/profile.html', {
+        'profile': profile,
+        'posts': posts,
+    })
