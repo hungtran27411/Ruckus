@@ -3,29 +3,35 @@
 <div class="row justify-content-center">
   <div class="col-md-6">
     <div class="card">
+      <h1 class="card-header text-center">Sign Up</h1>
       <div class="card-body">
-        <div class="text-center">
-          <h1>Sign up</h1>
-        </div>
-        <p class="red-text">{{ error_message }}</p>
+        <div class="text-center"></div>
+        {% if error_message %}
+        <p class="error-message fade-in text-center">{{ error_message }}</p>
+        {% endif %}
 
         <form method="post">
           {% csrf_token %}
-          <div class="mb-3">
+         <div class="mb-3">
             <label for="id_username" class="form-label">Username:</label>
             <input
-              type="text"
-              class="form-control"
-              id="id_username"
-              placeholder="Enter username"
-              name="username"
+                type="text"
+                class="form-control light-gray-placeholder"
+                id="id_username"
+                placeholder="Enter username"
+                name="username"
+                {% if form.username.errors %}
+                    data-toggle="tooltip"
+                    title="{{ form.username.errors.0 }}"
+                    data-placement="right"
+                {% endif %}
             />
-          </div>
+        </div>
           <div class="mb-3">
             <label for="id_password1" class="form-label">Password:</label>
             <input
-              type="password"
-              class="form-control"
+               type="password"
+              class="form-control light-gray-placeholder"
               id="id_password1"
               placeholder="Enter password"
               name="password1"
@@ -37,7 +43,7 @@
             >
             <input
               type="password"
-              class="form-control"
+              class="form-control light-gray-placeholder"
               id="id_password2"
               placeholder="Confirm password"
               name="password2"
@@ -50,7 +56,7 @@
             >
             <input
               type="text"
-              class="form-control"
+              class="form-control light-gray-placeholder"
               id="id_profile_name"
               placeholder="Enter your profile name"
               name="profile_name"
@@ -59,18 +65,21 @@
           <div class="mb-3">
             <label for="id_bio" class="form-label">Your Bio:</label>
             <textarea
-              class="form-control"
+              class="form-control light-gray-placeholder"
               id="id_bio"
               rows="3"
+              placeholder="Tell us a bit about yourself"
               name="bio"
             ></textarea>
           </div>
           <div class="text-center">
-            <button type="submit" class="btn btn-primary">Signup</button>
+            <button type="submit" class="btn btn-primary">Sign Up</button>
           </div>
         </form>
       </div>
     </div>
   </div>
 </div>
+
+
 {% endblock content %}
