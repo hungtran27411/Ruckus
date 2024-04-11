@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Post, Profile
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
@@ -11,8 +11,8 @@ from django.urls import reverse_lazy
 
 
 def home(request):
-    posts = Post.objects.all()
-    if request.user.is_authenticated:  # Check if user is logged in
+    posts = Post.objects.order_by('-id')  # Retrieve posts in reverse chronological order based on id
+    if request.user.is_authenticated:  
         if request.method == 'POST':
             form = PostForm(request.POST)
             if form.is_valid():
