@@ -1,15 +1,76 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} {% block content %}
 
+<div class="row justify-content-center">
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-body">
+        <div class="text-center">
+          <h1>Sign up</h1>
+        </div>
+        <p class="red-text">{{ error_message }}</p>
 
-{% block content %}
-<h1>Sign up</h1>
-
-<p class="red-text">{{ error_message }}</p>
-
-<form method="post">
-    {% csrf_token %}
-    {{ user_form.as_p }}
-    {{ profile_form.as_p }}
-    <button type="submit">Signup</button>
-</form>
+        <form method="post">
+          {% csrf_token %}
+          <div class="mb-3">
+            <label for="id_username" class="form-label">Username:</label>
+            <input
+              type="text"
+              class="form-control"
+              id="id_username"
+              placeholder="Enter username"
+              name="username"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="id_password1" class="form-label">Password:</label>
+            <input
+              type="password"
+              class="form-control"
+              id="id_password1"
+              placeholder="Enter password"
+              name="password1"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="id_password2" class="form-label"
+              >Confirm Password:</label
+            >
+            <input
+              type="password"
+              class="form-control"
+              id="id_password2"
+              placeholder="Confirm password"
+              name="password2"
+            />
+          </div>
+          <hr />
+          <div class="mb-3">
+            <label for="id_profile_name" class="form-label"
+              >Profile Name:</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="id_profile_name"
+              placeholder="Enter your profile name"
+              name="profile_name"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="id_bio" class="form-label">Your Bio:</label>
+            <textarea
+              class="form-control"
+              id="id_bio"
+              rows="3"
+              name="bio"
+            ></textarea>
+          </div>
+          <div class="text-center">
+            <button type="submit" class="btn btn-primary">Signup</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock content %}
