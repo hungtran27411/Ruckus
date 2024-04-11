@@ -6,6 +6,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import ProfileForm, PostForm
+from django.urls import reverse_lazy
 # Create your views here.
 
 
@@ -48,3 +49,17 @@ def signup(request):
         'user_form': user_form,
         'profile_form': profile_form
     })
+
+
+class PostUpdate(LoginRequiredMixin, UpdateView):
+    model = Post
+    fields = ['content']
+    template_name = 'edit.html'
+
+    success_url = '/'
+
+
+class PostDelete(LoginRequiredMixin, DeleteView):
+    model = Post
+    template_name = 'edit.html'
+    success_url = '/'
