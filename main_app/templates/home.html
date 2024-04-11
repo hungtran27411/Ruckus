@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+    <h1>Posts</h1>
+
+    
+    {% if user.is_authenticated %}
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Create Post</button>
+    </form>
+    {% endif %}
+        
+
+
+
+{% for post in posts %}
+    
+
+
+{% if post.profile == user.profile %}
+    
+<div>
+    <p>
+        {{ post.content }}
+        <a href="{% url 'update_post' pk=post.pk %}">edit</a>
+    </p>
+</div>
+
+
+{% else %}
+
+<div>
+    <p>
+        {{ post.content }}
+        
+    </p>
+</div>
+{% endif %}
+    
+
+    
+    
+        
+
+
+{% endfor %}
+    
+
+
+
+
+
+
+
+
+
+
+
+{% endblock content %}
+    
