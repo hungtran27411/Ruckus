@@ -17,11 +17,35 @@
 
 
 {% for post in posts %}
-    <div>
-        <p>
-            {{ post.content }}
-        </p>
-    </div>
+    
+
+
+{% if post.profile == user.profile %}
+    
+<div>
+    <p>
+        {{ post.content }}
+        <a href="{% url 'update_post' pk=post.pk %}">edit</a>
+    </p>
+</div>
+
+
+{% else %}
+
+<div>
+    <p>
+        {{ post.content }}
+        
+    </p>
+</div>
+{% endif %}
+    
+
+    
+    
+        
+
+
 {% endfor %}
     
 
