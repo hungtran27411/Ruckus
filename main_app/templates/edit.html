@@ -11,7 +11,7 @@
 
 {% block content %}
 <div class="row justify-content-center">
-  <div class="col-md-4 mb-6">
+  <div class="col-md-4">
     <div class="card">
       <div class="card-body">
         <div class="text-center"></div>
@@ -22,14 +22,16 @@
           </div>
           <div class="d-flex justify-content-between">
             <div class="text-start">
-                <button type="button" class="btn btn-warning" onclick="window.history.back()">Cancel</button>
+                <button type="button" class="btn btn-info" onclick="window.history.back()"><span class="material-symbols-outlined">
+                    arrow_back
+                    </span></button>
             </div>
             <div class="text-end">
                 {% if request.GET.delete_action %}
-                    <button type="submit" class="btn btn-danger">Confirm Delete</button>
+                    <button type="submit" class="btn btn-outline-danger">Confirm Delete</button>
                 {% endif %}
                 {% if request.GET.edit_action %}
-                    <button type="submit" class="btn btn-success">Confirm Edit</button>
+                    <button type="submit" class="btn btn-outline-success">Confirm Edit</button>
                 {% endif %}
             </div>
         </div>

@@ -1,10 +1,8 @@
 {% extends 'base.html' %} {% block content %}
 
 {% if user.is_authenticated %}
-<br />
-<br />
 <div class="row justify-content-center">
-  <div class="col-md-9 mb-6">
+  <div class="col-md-5 mb-4">
     <div class="card">
       <div class="card-body">
         <div class="text-center"></div>
@@ -28,8 +26,6 @@
     </div>
   </div>
 </div>
-<br />
-<br />
 
 {% for post in posts %}
 
@@ -49,12 +45,16 @@
         <div class="card-footer d-flex justify-content-between">
             <div class="text-start">
                 <button class="btn btn-danger">
-                <a class="custom-link2" href="{% url 'delete_post' pk=post.pk %}?delete_action=true">Delete Post</a>
+                <a class="custom-link2" href="{% url 'delete_post' pk=post.pk %}?delete_action=true"><span class="material-symbols-outlined">
+                    delete
+                    </span></a>
             </button>
             </div>
         <div class="text-end">
-            <button class="btn btn-success">
-            <a class="custom-link2" href="{% url 'update_post' pk=post.pk %}?edit_action=true">Edit Post</a>
+            <button class="btn btn-info">
+            <a class="custom-link2" href="{% url 'update_post' pk=post.pk %}?edit_action=true"><span class="material-symbols-outlined">
+                edit
+                </span></a>
         </button>
         </div>
     </div>
