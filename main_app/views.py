@@ -7,6 +7,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import ProfileForm, PostForm
 from django.urls import reverse_lazy
+from django.conf import settings
+from django.utils.module_loading import import_string
 # Create your views here.
 
 
@@ -44,10 +46,13 @@ def signup(request):
     else:
         user_form = UserCreationForm()
         profile_form = ProfileForm()
+    
+    help_texts = get_password_validators_help_texts()
     return render(request, 'registration/signup.html', {
         'error_message': error_message,
         'user_form': user_form,
-        'profile_form': profile_form
+        'profile_form': profile_form,
+        'help_texts': help_texts
     })
 
 
@@ -72,3 +77,12 @@ def profile_detail(request, profile_id):
         'profile': profile,
         'posts': posts,
     })
+
+def get_password_validators_help_texts():
+    validators = settings.AUTH_PASSWORD_VALIDATORS
+    help_texts = []
+    for validator_config in validators:
+        ValidatorClass = import_string(validator_config['NAME'])
+        validator = ValidatorClass()
+        help_texts.append(validator.get_help_text())
+    return help_texts
