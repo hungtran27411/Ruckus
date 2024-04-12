@@ -19,6 +19,8 @@
             
             {% if user.is_authenticated %}
             <a href="{% url 'logout' %}">Logout</a>
+            <a href="{% url 'profile_detail' profile_id=user.profile.id %}">Profile</a>
+            <a href="{% url 'home' %}">Main Feed</a>
             {% else %}
             <a href="{% url 'login' %}">Login</a>
             <a href="{% url 'signup' %}">Signup</a>
