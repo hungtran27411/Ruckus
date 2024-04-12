@@ -1,11 +1,16 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from .models import Post, Profile
+from django.shortcuts import render, redirect
+from .models import Post, Profile, Photo
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import ProfileForm, PostForm
+from django.urls import reverse_lazy, reverse
+# stuff for photo upload for aws
+import uuid # for random numbers (used in generating photo name)
+import boto3 # aws sdk that lets us talk to our s3 bucket
+import os # this lets us talk to the .env
 from django.urls import reverse_lazy
 from django.conf import settings
 from django.utils.module_loading import import_string
@@ -73,10 +78,34 @@ class PostDelete(LoginRequiredMixin, DeleteView):
 def profile_detail(request, profile_id):
     profile = Profile.objects.get(id=profile_id)
     posts = Post.objects.filter(profile=profile)
+    print(profile)
     return render(request, 'profile/profile.html', {
         'profile': profile,
         'posts': posts,
+        # add photos : photos?
     })
+
+def add_user_photo(request, profile_id):
+    # profile = request.user.profile
+    photo_file = request.FILES.get('photo-file', None)
+    
+    if photo_file:
+        s3 = boto3.client('s3')
+        key = 'profile_photos/' + uuid.uuid4().hex[:6] + photo_file.name[photo_file.name.rfind('.'):]
+        
+        try:
+            bucket = os.environ['S3_BUCKET']
+            s3.upload_fileobj(photo_file, bucket, key)
+            url = f"{os.environ['S3_BASE_URL']}{bucket}/{key}"
+            Photo.objects.create(url=url, profile_id=profile_id) # i thought the object was created here similar to catcollector
+        except Exception as e:
+            print('An error occurred uploading file to S3')
+            print(e)
+    # profile_page_url = reverse('profile_detail', kwargs={'profile_id': request.user.profile.id})
+    
+    # Redirect to the profile page URL
+    return redirect('profile_detail', profile_id=profile_id)
+    
 
 def get_password_validators_help_texts():
     validators = settings.AUTH_PASSWORD_VALIDATORS

@@ -1,33 +1,31 @@
 {% extends 'base.html' %}
 
-
-
 {% block content %}
-    
-
-
 
 <div>
-    <p>{{ profile.profile_name }}</p>
+	<!-- Display user's profile name -->
+	<p>{{ profile.profile_name }}</p>
+	  <!-- Display user's profile picture -->
+	  {% if profile.photo.url %}
+	  <img src="{{ profile.photo.url }}" alt="Profile Picture">
+  {% else %}
+	  <p>No profile picture available</p>
+  {% endif %}
+	
+	<!-- Display user's profile picture -->
+		<!-- Add form for uploading profile picture -->
+		<form method="post" enctype="multipart/form-data" action="{% url 'add_user_photo' profile.id %}">
+			{% csrf_token %}
+			<h2>Upload Profile Picture</h2>
+			<input type="file" name="photo-file">
+			<button type="submit">Upload</button>
+		</form>
 </div>
 
-
-
-
-
 {% for post in posts %}
-    <div>
-        <p>
-            {{ post.content }}
-        </p>
-    </div>
+	<div>
+		<p>{{ post.content }}</p>
+	</div>
 {% endfor %}
-    
-    
-    
-
-
-
 
 {% endblock content %}
-    
