@@ -28,10 +28,14 @@
             </div>
             <div class="text-end">
                 {% if request.GET.delete_action %}
-                    <button type="submit" class="btn btn-outline-danger">Confirm Delete</button>
+                    <button type="submit" class="btn btn-outline-danger"><span class="material-symbols-outlined utility">
+                      delete
+                    </span></button>
                 {% endif %}
                 {% if request.GET.edit_action %}
-                    <button type="submit" class="btn btn-outline-success">Confirm Edit</button>
+                    <button type="submit" class="btn btn-outline-success"><span class="material-symbols-outlined utility">
+                      edit
+                    </span></button>
                 {% endif %}
             </div>
         </div>

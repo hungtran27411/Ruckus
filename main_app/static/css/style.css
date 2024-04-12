@@ -24,11 +24,6 @@ a.custom-link {
   color: blue;
 }
 
-a.custom-link2 {
-  text-decoration: none;
-  color: white;
-}
-
 .nav-tabs .nav-link {
   border-radius: 0;
 }
@@ -78,3 +73,25 @@ header {
   'GRAD' 0,
   'opsz' 24
 }
+
+.card-header img {
+  width: 10%; /* Set the width to 100% to make the image responsive */
+  height: auto; /* Let the height adjust automatically to maintain the aspect ratio */
+  border-radius: 50%; /* Set border-radius to 50% to create a circular image */
+}
+
+.btn-content {
+  white-space: nowrap; /* Ensure button text does not wrap */
+  padding: .375rem .75rem; /* Standard Bootstrap padding for buttons */
+}
+
+.btn-outline-secondary {
+  display: inline-block;
+  border-color: #D2D2D2;
+}
+
+.utility {
+  color: #D2D2D2;
+  vertical-align: middle;
+}
+
