@@ -14,6 +14,7 @@ class Profile(models.Model):
 class Post(models.Model):
     content = models.TextField(max_length=256)
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
 
 class Photo(models.Model):
     url = models.CharField(max_length=200)
