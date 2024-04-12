@@ -30,20 +30,12 @@
           <div class="mb-3">
             <label for="id_password1" class="form-label">Password:</label>
             <input
-              type="password"
+               type="password"
               class="form-control light-gray-placeholder"
               id="id_password1"
               placeholder="Enter password"
               name="password1"
             />
-            <small class="form-text text-muted">
-              Password requirements:
-              <ul>
-                {% for text in help_texts %}
-                  <li>{{ text }}</li>
-                {% endfor %}
-              </ul>
-            </small>
           </div>
           <div class="mb-3">
             <label for="id_password2" class="form-label"
