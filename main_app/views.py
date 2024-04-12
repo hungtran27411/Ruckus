@@ -19,6 +19,7 @@ from django.utils.module_loading import import_string
 
 def home(request):
     posts = Post.objects.order_by('-id')  # Retrieve posts in reverse chronological order based on id
+    profile = None  # Initialize profile variable
     if request.user.is_authenticated:  
         if request.method == 'POST':
             form = PostForm(request.POST)
@@ -29,7 +30,8 @@ def home(request):
                 return redirect('home')
         else:
             form = PostForm()
-        return render(request, 'home.html', {'form': form, 'posts': posts})
+            profile = request.user.profile  # Retrieve the user's profile
+        return render(request, 'home.html', {'form': form, 'posts': posts, 'profile': profile})
     else:
         return render(request, 'home.html', {'posts': posts})
 
