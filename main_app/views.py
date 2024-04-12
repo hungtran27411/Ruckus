@@ -51,10 +51,13 @@ def signup(request):
     else:
         user_form = UserCreationForm()
         profile_form = ProfileForm()
+        
+    help_texts = get_password_validators_help_texts()    
     return render(request, 'registration/signup.html', {
         'error_message': error_message,
         'user_form': user_form,
-        'profile_form': profile_form
+        'profile_form': profile_form,
+        'help_texts': help_texts
     })
 
 

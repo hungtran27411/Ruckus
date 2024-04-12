@@ -36,6 +36,14 @@
               placeholder="Enter password"
               name="password1"
             />
+            <small class="form-text text-muted">
+              Password requirements:
+              <ul>
+                {% for text in help_texts %}
+                  <li>{{ text }}</li>
+                {% endfor %}
+              </ul>
+            </small>
           </div>
           <div class="mb-3">
             <label for="id_password2" class="form-label"
