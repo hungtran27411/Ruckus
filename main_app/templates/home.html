@@ -1,65 +1,33 @@
 {% extends 'base.html' %}
 
-
 {% block content %}
     <h1>Posts</h1>
 
-    
     {% if user.is_authenticated %}
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Create Post</button>
-    </form>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Create Post</button>
+        </form>
+        
     {% endif %}
-        
 
-
-
-{% for post in posts %}
-    
-
-
-{% if post.profile == user.profile %}
-    
-<div>
-    <p>
-        <a href="{% url 'profile_detail' profile_id=post.profile.id %}">profile</a>
-        {{ post.content }}
-        <a href="{% url 'update_post' pk=post.pk %}">edit</a>
-    </p>
-</div>
-
-
-{% else %}
-
-<div>
-    <p>
-        <a href="{% url 'profile_detail' profile_id=post.profile.id %}">profile</a>
-        {{ post.content }}
-        
-    </p>
-</div>
-{% endif %}
-    
-
-    
-    
-        
-
-
-{% endfor %}
-    
-
-
-
-
-
-
-
-
-
-
-
+    {% for post in posts %}
+        {% if post.profile == user.profile %}
+            <div>
+                <p>
+                    <a href="{% url 'profile_detail' profile_id=post.profile.id %}">Profile</a>
+                    {{ post.content }}
+                    <a href="{% url 'update_post' pk=post.pk %}">Edit</a>
+                </p>
+            </div>
+        {% else %}
+            <div>
+                <p>
+                    <a href="{% url 'profile_detail' profile_id=post.profile.id %}">Profile</a>
+                    {{ post.content }}
+                </p>
+            </div>
+        {% endif %}
+    {% endfor %}
 {% endblock content %}
-    
