@@ -11,6 +11,9 @@ from django.urls import reverse_lazy, reverse
 import uuid # for random numbers (used in generating photo name)
 import boto3 # aws sdk that lets us talk to our s3 bucket
 import os # this lets us talk to the .env
+from django.urls import reverse_lazy
+from django.conf import settings
+from django.utils.module_loading import import_string
 # Create your views here.
 
 
@@ -44,14 +47,17 @@ def signup(request):
             login(request, user)
             return redirect('home')
         else:
-            error_message = 'Invalid signup'
+            error_message = 'Invalid sign up.  Please check your information and try again.'
     else:
         user_form = UserCreationForm()
         profile_form = ProfileForm()
+    
+    help_texts = get_password_validators_help_texts()
     return render(request, 'registration/signup.html', {
         'error_message': error_message,
         'user_form': user_form,
-        'profile_form': profile_form
+        'profile_form': profile_form,
+        'help_texts': help_texts
     })
 
 
@@ -99,3 +105,13 @@ def add_user_photo(request, profile_id):
     
     # Redirect to the profile page URL
     return redirect('profile_detail', profile_id=profile_id)
+    
+
+def get_password_validators_help_texts():
+    validators = settings.AUTH_PASSWORD_VALIDATORS
+    help_texts = []
+    for validator_config in validators:
+        ValidatorClass = import_string(validator_config['NAME'])
+        validator = ValidatorClass()
+        help_texts.append(validator.get_help_text())
+    return help_texts

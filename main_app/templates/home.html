@@ -1,33 +1,67 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} {% block content %}
 
-{% block content %}
-    <h1>Posts</h1>
-
-    {% if user.is_authenticated %}
-        <form method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">Create Post</button>
+{% if user.is_authenticated %}
+<div class="row justify-content-center">
+  <div class="col-md-5 mb-4">
+    <div class="card">
+      <div class="card-body">
+        <div class="text-center"></div>
+        <form method="post">
+          {% csrf_token %}
+          <div class="mb-3">
+            <textarea
+              class="form-control light-gray-placeholder"
+              id="id_content"
+              rows="2"
+              placeholder="Share your 256 character thoughts"
+              name="content"
+            ></textarea>
+          </div>
+          <div class="text-center">
+            <button type="submit" class="btn btn-primary">Create Post</button>
+          </div>
         </form>
-        
-    {% endif %}
-
-    {% for post in posts %}
-        {% if post.profile == user.profile %}
-            <div>
-                <p>
-                    <a href="{% url 'profile_detail' profile_id=post.profile.id %}">Profile</a>
-                    {{ post.content }}
-                    <a href="{% url 'update_post' pk=post.pk %}">Edit</a>
-                </p>
-            </div>
-        {% else %}
-            <div>
-                <p>
-                    <a href="{% url 'profile_detail' profile_id=post.profile.id %}">Profile</a>
-                    {{ post.content }}
-                </p>
-            </div>
         {% endif %}
-    {% endfor %}
-{% endblock content %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% for post in posts %}
+
+<div class="row justify-content-center">
+  <div class="col-md-4 mb-4">
+    <div class="card">
+      <h5 class="card-header">
+        {% if user.is_authenticated %}
+        <a class="custom-link" href="{% url 'profile_detail' profile_id=post.profile.id %}">{% endif %}{{ post.profile }}</a>
+
+      </h5>
+      <div class="card-body">
+        <div class="text-center"></div>
+        {{ post.content }}
+      </div>
+        {% if post.profile == user.profile %}
+        <div class="card-footer d-flex justify-content-between">
+            <div class="text-start">
+                <button class="btn btn-danger">
+                <a class="custom-link2" href="{% url 'delete_post' pk=post.pk %}?delete_action=true"><span class="material-symbols-outlined">
+                    delete
+                    </span></a>
+            </button>
+            </div>
+        <div class="text-end">
+            <button class="btn btn-info">
+            <a class="custom-link2" href="{% url 'update_post' pk=post.pk %}?edit_action=true"><span class="material-symbols-outlined">
+                edit
+                </span></a>
+        </button>
+        </div>
+    </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endfor %} {% endblock content %}
