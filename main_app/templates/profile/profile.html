@@ -7,19 +7,20 @@
 	<p>{{ profile.profile_name }}</p>
 	<!-- Display user's profile picture -->
 	{% if profile.photo.url %}
-	<img src="{{ profile.photo.url }}" alt="Profile Picture">
-	{% else %}
-	<p>No profile picture available</p>
+	  <img src="{{ profile.photo.url }}" alt="Profile Picture">
 	{% endif %}
-
-	<!-- Display user's profile picture -->
-	<!-- Add form for uploading profile picture -->
-	<form method="post" enctype="multipart/form-data" action="{% url 'add_user_photo' profile.id %}">
-		{% csrf_token %}
-		<h2>Upload Profile Picture</h2>
-		<input type="file" name="photo-file">
-		<button type="submit">Upload</button>
-	</form>
+  
+  {% if user.is_authenticated %}
+    {% if profile == user.profile %}
+      <form method="post" enctype="multipart/form-data" action="{% url 'add_user_photo' profile.id %}">
+        {% csrf_token %}
+        <h2>Upload Profile Picture</h2>
+        <input type="file" name="photo-file">
+        <button type="submit">Upload</button>
+      </form>
+    {% endif %}
+  {% endif %}
+  
 </div>
 <div>
 
