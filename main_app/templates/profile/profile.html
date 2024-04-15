@@ -6,15 +6,20 @@
 	<!-- Display user's profile name -->
 	<p>{{ profile.profile_name }}</p>
 	<!-- Display user's profile picture -->
-  <form method="post" enctype="multipart/form-data" action="{% url 'add_user_photo' profile.id %}">
-    {% csrf_token %}
-    <h2>Upload Profile Picture</h2>
-    {% if profile.photo.url %}
-      <img src="{{ profile.photo.url }}" alt="Profile Picture">
+	{% if profile.photo.url %}
+	  <img src="{{ profile.photo.url }}" alt="Profile Picture">
+	{% endif %}
+  
+  {% if user.is_authenticated %}
+    {% if profile == user.profile %}
+      <form method="post" enctype="multipart/form-data" action="{% url 'add_user_photo' profile.id %}">
+        {% csrf_token %}
+        <h2>Upload Profile Picture</h2>
+        <input type="file" name="photo-file">
+        <button type="submit">Upload</button>
+      </form>
     {% endif %}
-    <input type="file" name="photo-file">
-    <button type="submit">Upload/Update</button>
-  </form>
+  {% endif %}
   
 </div>
 <div>
