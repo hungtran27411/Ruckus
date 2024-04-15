@@ -20,6 +20,7 @@ from django.http import HttpResponseNotAllowed
 
 def home(request):
     posts = Post.objects.order_by('-id')  # Retrieve posts in reverse chronological order based on id
+    profile = None  # Initialize profile variable
     if request.user.is_authenticated:  
         if request.method == 'POST':
             form = PostForm(request.POST)
@@ -30,7 +31,8 @@ def home(request):
                 return redirect('home')
         else:
             form = PostForm()
-        return render(request, 'home.html', {'form': form, 'posts': posts})
+            profile = request.user.profile  # Retrieve the user's profile
+        return render(request, 'home.html', {'form': form, 'posts': posts, 'profile': profile})
     else:
         return render(request, 'home.html', {'posts': posts})
 
@@ -52,8 +54,8 @@ def signup(request):
     else:
         user_form = UserCreationForm()
         profile_form = ProfileForm()
-    
-    help_texts = get_password_validators_help_texts()
+        
+    help_texts = get_password_validators_help_texts()    
     return render(request, 'registration/signup.html', {
         'error_message': error_message,
         'user_form': user_form,
