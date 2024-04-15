@@ -36,7 +36,9 @@
         {% if post.profile.photo.url %}
         <img src="{{ post.profile.photo.url }}" alt="Profile Picture" class="card-header-img">
         {% else %}
-        <p>No profile picture available</p>
+        <span class="material-symbols-outlined" style="font-size: 50px; color: #1DA1F2;" >
+          account_circle
+          </span>
         {% endif %}
         <div class="timestamp">{{ post.created_at }}</div>
         {% if user.is_authenticated %}
