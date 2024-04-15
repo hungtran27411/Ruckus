@@ -47,6 +47,21 @@
       <div class="card-body">
         <div class="text-center"></div>
         {{ post.content }}
+        {{ post.likes.count }}
+        {% if user.is_authenticated %}
+            {% if user.profile in post.likes.all %}
+
+                <form action="{% url 'unlike_post' post.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit">Unlike</button>
+                </form>
+            {% else %}
+                <form action="{% url 'like_post' post.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit">Like</button>
+                </form>
+            {% endif %}
+        {% endif %}
       </div>
         {% if post.profile == user.profile %}
         <div class="card-footer d-flex justify-content-end">

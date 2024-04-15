@@ -89,7 +89,6 @@ def profile_detail(request, profile_id):
     })
 
 def add_user_photo(request, profile_id):
-    # profile = request.user.profile
     photo_file = request.FILES.get('photo-file', None)
     
     if photo_file:
@@ -100,14 +99,17 @@ def add_user_photo(request, profile_id):
             bucket = os.environ['S3_BUCKET']
             s3.upload_fileobj(photo_file, bucket, key)
             url = f"{os.environ['S3_BASE_URL']}{bucket}/{key}"
-            Photo.objects.create(url=url, profile_id=profile_id) # i thought the object was created here similar to catcollector
+            
+            # Check if a photo already exists for the user
+            photo, created = Photo.objects.get_or_create(profile_id=profile_id)
+            photo.url = url
+            photo.save()
         except Exception as e:
             print('An error occurred uploading file to S3')
             print(e)
-    # profile_page_url = reverse('profile_detail', kwargs={'profile_id': request.user.profile.id})
-    
-    # Redirect to the profile page URL
+
     return redirect('profile_detail', profile_id=profile_id)
+
     
 
 def get_password_validators_help_texts():
@@ -136,4 +138,26 @@ def unfollow_profile(request, profile_id):
         return redirect('profile_detail', profile_id=profile_id)
     else:
         
+        return HttpResponseNotAllowed(['POST'])
+
+@login_required
+def like_post(request, post_id):
+    if request.method == 'POST':
+        post_to_like = Post.objects.get(id=post_id)
+        profile = request.user.profile
+        post_to_like.likes.add(profile)
+        return redirect('home')
+    else:
+        # Handle GET request
+        return HttpResponseNotAllowed(['POST'])
+
+@login_required
+def unlike_post(request, post_id):
+    if request.method == 'POST':
+        post_to_unlike = Post.objects.get(id=post_id)
+        profile = request.user.profile
+        post_to_unlike.likes.remove(profile)
+        return redirect('home')
+    else:
+        # Handle GET request
         return HttpResponseNotAllowed(['POST'])
