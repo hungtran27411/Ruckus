@@ -24,28 +24,30 @@
 </div>
 <div>
 
-	{% if user.is_authenticated %}
-	{% if not profile == user.profile %}
-	{% if profile in user.profile.following.all %}
-	<form action="{% url 'unfollow_profile' profile.id %}" method="post">
-		{% csrf_token %}
-		<button type="submit">Unfollow</button>
-	</form>
-	{% else %}
-	<form action="{% url 'follow_profile' profile.id %}" method="post">
-		{% csrf_token %}
-		<button type="submit">Follow</button>
-	</form>
-	{% endif %}
-	{% endif %}
-	{% endif %}
+    <!-- Action buttons: Follow/Unfollow, Edit Profile -->
+    <div class="action-buttons">
+        {% if user.is_authenticated and not profile == user.profile %}
+        {% if profile in user.profile.following.all %}
+        <form action="{% url 'unfollow_profile' profile.id %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-outline-primary">Unfollow</button>
+        </form>
+        {% else %}
+        <form action="{% url 'follow_profile' profile.id %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary">Follow</button>
+        </form>
+        {% endif %}
+        {% endif %}
+    </div>
 
+    <!-- Posts Section -->
+    <div class="posts">
+        {% for post in posts %}
+        <div class="post">
+            <p>{{ post.content }}</p>
+        </div>
+        {% endfor %}
+    </div>
 </div>
-
-{% for post in posts %}
-<div>
-	<p>{{ post.content }}</p>
-</div>
-{% endfor %}
-
 {% endblock content %}
