@@ -14,6 +14,7 @@ import os # this lets us talk to the .env
 from django.urls import reverse_lazy
 from django.conf import settings
 from django.utils.module_loading import import_string
+from django.http import HttpResponseNotAllowed
 # Create your views here.
 
 
@@ -117,3 +118,22 @@ def get_password_validators_help_texts():
         validator = ValidatorClass()
         help_texts.append(validator.get_help_text())
     return help_texts
+
+@login_required
+def follow_profile(request, profile_id):
+    if request.method == 'POST':
+        profile_to_follow = Profile.objects.get(id=profile_id)
+        request.user.profile.following.add(profile_to_follow)
+        return redirect('profile_detail', profile_id=profile_id)
+    else: 
+        return HttpResponseNotAllowed(['POST'])
+    
+@login_required
+def unfollow_profile(request, profile_id):
+    if request.method == 'POST':
+        profile_to_unfollow = Profile.objects.get(id=profile_id)
+        request.user.profile.following.remove(profile_to_unfollow)
+        return redirect('profile_detail', profile_id=profile_id)
+    else:
+        
+        return HttpResponseNotAllowed(['POST'])
