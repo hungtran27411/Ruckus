@@ -38,6 +38,7 @@
         {% else %}
         <p>No profile picture available</p>
         {% endif %}
+        <div class="timestamp">{{ post.created_at }}</div>
         {% if user.is_authenticated %}
         <a class="custom-link" href="{% url 'profile_detail' profile_id=post.profile.id %}">{% endif %}{{ post.profile }}</a>
       </h5>

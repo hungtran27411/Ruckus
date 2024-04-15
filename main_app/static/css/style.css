@@ -95,3 +95,11 @@ header {
   vertical-align: middle;
 }
 
+.timestamp {
+  font-size: x-small;
+  color: #a6a6a6; /* Gray color */
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0.5rem;
+}
