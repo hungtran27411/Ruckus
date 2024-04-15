@@ -1,52 +1,50 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<div class="container">
+    <div class="profile-header">
+        <!-- Display user's profile picture -->
+        {% if profile.photo.url %}
+            <img src="{{ profile.photo.url }}" alt="Profile Picture" class="profile-pic">
+        {% else %}
+            <span class="material-symbols-outlined profile-icon">person</span>
+        {% endif %}
+        <!-- Display user's profile name -->
+        <h1>{{ profile.profile_name }}</h1>
 
-<div>
-	<!-- Display user's profile name -->
-	<p>{{ profile.profile_name }}</p>
-	<!-- Display user's profile picture -->
-	{% if profile.photo.url %}
-	  <img src="{{ profile.photo.url }}" alt="Profile Picture">
-	{% endif %}
-  
-  {% if user.is_authenticated %}
-    {% if profile == user.profile %}
-      <form method="post" enctype="multipart/form-data" action="{% url 'add_user_photo' profile.id %}">
-        {% csrf_token %}
-        <h2>Upload Profile Picture</h2>
-        <input type="file" name="photo-file">
-        <button type="submit">Upload</button>
-      </form>
-    {% endif %}
-  {% endif %}
-  
-</div>
-<div>
+        {% if user.is_authenticated and profile == user.profile %}
+            <form method="post" enctype="multipart/form-data" action="{% url 'add_user_photo' profile.id %}">
+                {% csrf_token %}
+                <input type="file" name="photo-file" id="photo-file" class="form-control-file" style="display: none;">
+                <label for="photo-file" class="btn btn-primary">Change Photo</label>
+                <button type="submit" class="btn btn-outline-primary">Upload</button>
+            </form>
+        {% endif %}
+    </div>
 
     <!-- Action buttons: Follow/Unfollow, Edit Profile -->
     <div class="action-buttons">
         {% if user.is_authenticated and not profile == user.profile %}
-        {% if profile in user.profile.following.all %}
-        <form action="{% url 'unfollow_profile' profile.id %}" method="post">
-            {% csrf_token %}
-            <button type="submit" class="btn btn-outline-primary">Unfollow</button>
-        </form>
-        {% else %}
-        <form action="{% url 'follow_profile' profile.id %}" method="post">
-            {% csrf_token %}
-            <button type="submit" class="btn btn-primary">Follow</button>
-        </form>
-        {% endif %}
+            {% if profile in user.profile.following.all %}
+                <form action="{% url 'unfollow_profile' profile.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-outline-primary">Unfollow</button>
+                </form>
+            {% else %}
+                <form action="{% url 'follow_profile' profile.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary">Follow</button>
+                </form>
+            {% endif %}
         {% endif %}
     </div>
 
     <!-- Posts Section -->
     <div class="posts">
         {% for post in posts %}
-        <div class="post">
-            <p>{{ post.content }}</p>
-        </div>
+            <div class="post">
+                <p>{{ post.content }}</p>
+            </div>
         {% endfor %}
     </div>
 </div>
