@@ -139,3 +139,25 @@ def unfollow_profile(request, profile_id):
     else:
         
         return HttpResponseNotAllowed(['POST'])
+
+@login_required
+def like_post(request, post_id):
+    if request.method == 'POST':
+        post_to_like = Post.objects.get(id=post_id)
+        profile = request.user.profile
+        post_to_like.likes.add(profile)
+        return redirect('home')
+    else:
+        # Handle GET request
+        return HttpResponseNotAllowed(['POST'])
+
+@login_required
+def unlike_post(request, post_id):
+    if request.method == 'POST':
+        post_to_unlike = Post.objects.get(id=post_id)
+        profile = request.user.profile
+        post_to_unlike.likes.remove(profile)
+        return redirect('home')
+    else:
+        # Handle GET request
+        return HttpResponseNotAllowed(['POST'])
