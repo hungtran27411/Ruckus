@@ -7,6 +7,7 @@ class Profile(models.Model):
     profile_name = models.CharField(max_length=15)
     bio = models.TextField(max_length=250)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    followers = models.ManyToManyField('self', symmetrical=False, related_name='following', blank=True)
     
     def __str__(self): 
         return self.profile_name
