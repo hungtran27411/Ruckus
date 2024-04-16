@@ -129,7 +129,6 @@ def add_user_photo(request, profile_id):
 
     return redirect('profile_detail', profile_id=profile_id)
 
-
 def get_password_validators_help_texts():
     validators = settings.AUTH_PASSWORD_VALIDATORS
     help_texts = []
