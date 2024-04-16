@@ -22,18 +22,18 @@
           </div>
           <div class="d-flex justify-content-between">
             <div class="text-start">
-                <button type="button" class="btn btn-info" onclick="window.history.back()"><span class="material-symbols-outlined">
+                <button type="button" class="btn btn-outline-secondary" onclick="window.history.back()"><span class="material-symbols-outlined utility">
                     arrow_back
                     </span></button>
             </div>
             <div class="text-end">
                 {% if request.GET.delete_action %}
-                    <button type="submit" class="btn btn-outline-danger"><span class="material-symbols-outlined utility">
+                    <button type="submit" class="btn btn-outline-secondary"><span class="material-symbols-outlined utility">
                       delete
                     </span></button>
                 {% endif %}
                 {% if request.GET.edit_action %}
-                    <button type="submit" class="btn btn-outline-success"><span class="material-symbols-outlined utility">
+                    <button type="submit" class="btn btn-outline-secondary"><span class="material-symbols-outlined utility">
                       edit
                     </span></button>
                 {% endif %}
