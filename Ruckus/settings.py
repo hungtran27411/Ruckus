@@ -30,7 +30,7 @@ SECRET_KEY = 'django-insecure-4n=piph@bm#q4ap)28(3aiox-sz2t01u5ami0_p*hw^(uw*i$#
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['ruckus.onrender.com', 'localhost']
 
 
 # Application definition
@@ -136,7 +136,7 @@ if not DEBUG:
     # Enable the WhiteNoise storage backend, which compresses static files to reduce disk use
     # and renames the files with unique names for each version to support long-term caching
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'main_app/static')]
+STATIC_ROOT = "static"
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
