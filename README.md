@@ -1,4 +1,12 @@
 # Ruckus
+<<<<<<< HEAD
+I, too, Ruckus
+testing 
+testing -thelonious
+one more edit
+test
+test2
+=======
 
 Ruckus is a social networking platform where users can connect with friends, share updates, and discover new content.
 
@@ -22,3 +30,4 @@ Ruckus is a social networking platform where users can connect with friends, sha
 
 ### Pitch Deck
 [Pitch Deck](https://docs.google.com/presentation/d/1lsPoUY-z0o8GVEk7ymRP58x5uFgsO5xTogvQ-ouWkg8/edit#slide=id.p)
+>>>>>>> main
