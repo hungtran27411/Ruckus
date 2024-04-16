@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="container">
-    <div class="profile-header">
+    <div class="profile-header text-center">
         <!-- Display user's profile picture -->
         {% if profile.photo.url %}
             <img src="{{ profile.photo.url }}" alt="Profile Picture" class="profile-pic">
@@ -11,6 +11,12 @@
         {% endif %}
         <!-- Display user's profile name -->
         <h1>{{ profile.profile_name }}</h1>
+		<p class="bio">Bio:{{ profile.bio }}</p>
+		<div class="follower-info">
+            <strong>{{ followers_count }}</strong> followers
+            &bull;
+            <strong>{{ following_count }}</strong> following
+        </div>
 
         {% if user.is_authenticated and profile == user.profile %}
             <form method="post" enctype="multipart/form-data" action="{% url 'add_user_photo' profile.id %}">
@@ -38,13 +44,72 @@
             {% endif %}
         {% endif %}
     </div>
-
+</div>
     <!-- Posts Section -->
     <div class="posts">
         {% for post in posts %}
-            <div class="post">
-                <p>{{ post.content }}</p>
-            </div>
+		<div class="row justify-content-center">
+			<div class="col-md-4 mb-4">
+			  <div class="card">
+				<h5 class="card-header">
+				  {% if post.profile.photo.url %}
+				  <img src="{{ post.profile.photo.url }}" alt="Profile Picture" class="card-header-img">
+				  {% else %}
+				  <span class="material-symbols-outlined" style="font-size: 50px; color: #1DA1F2;" >
+					account_circle
+					</span>
+				  {% endif %}
+				  <div class="timestamp">{{ post.created_at }}</div>
+				  {% if user.is_authenticated %}
+				  <a class="custom-link" href="{% url 'profile_detail' profile_id=post.profile.id %}">{% endif %}{{ post.profile }}</a>
+				</h5>
+				<div class="card-body d-flex justify-content-between align-items-start">
+				  <!-- Post content on the left -->
+				  <div class="post-content">
+					  {{ post.content }}
+				  </div>
+				  <!-- Likes and buttons on the right -->
+				  <div class="likes-section ml-auto">
+					  <span class="likes-count minor-text">{{ post.likes.count }}</span>
+					  {% if user.is_authenticated %}
+						  {% if user.profile in post.likes.all %}
+							  <form action="{% url 'unlike_post' post.id %}" method="post" class="d-inline">
+								  {% csrf_token %}
+								  <button type="submit" class="btn btn-outline-secondary btn-sm">Unlike</button>
+							  </form>
+						  {% else %}
+							  <form action="{% url 'like_post' post.id %}" method="post" class="d-inline">
+								  {% csrf_token %}
+								  <button type="submit" class="btn btn-outline-secondary btn-sm">Like</button>
+							  </form>
+						  {% endif %}
+					  {% endif %}
+				  </div>
+			  </div>
+				  {% if post.profile == user.profile %}
+				  <div class="card-footer d-flex justify-content-end">
+					<div class="btn-group" role="group" aria-label="Edit or delete button group">
+					  <button type="button" class="btn btn-outline-secondary btn-content">
+						<a href="{% url 'delete_post' pk=post.pk %}?delete_action=true">
+						  <span class="material-symbols-outlined utility">
+							delete
+						  </span>
+						</a>
+					  </button>
+					  <button type="button" class="btn btn-outline-secondary btn-content">
+						<a href="{% url 'update_post' pk=post.pk %}?edit_action=true">
+						  <span class="material-symbols-outlined utility">
+							edit
+						  </span>
+						</a>
+					  </button>
+					</div>
+				  </div>
+				  {% endif %}
+				</div>
+			  </div>
+			</div>
+		  </div>
         {% endfor %}
     </div>
 </div>
