@@ -63,6 +63,13 @@ def signup(request):
         'help_texts': help_texts
     })
 
+@login_required
+def following_page(request):
+    following_profiles = request.user.profile.following.all()
+    following_posts = Post.objects.filter(profile__in=following_profiles.order_by('-id'))
+    return render(request, 'following_page.html', {
+        'following_posts': following_posts
+    })
 
 class PostUpdate(LoginRequiredMixin, UpdateView):
     model = Post
