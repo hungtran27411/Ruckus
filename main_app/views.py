@@ -80,11 +80,16 @@ class PostDelete(LoginRequiredMixin, DeleteView):
 
 def profile_detail(request, profile_id):
     profile = Profile.objects.get(id=profile_id)
-    posts = Post.objects.filter(profile=profile)
+    posts = Post.objects.filter(profile=profile).order_by('-id')
+    followers_count = profile.followers.count()  # Count the number of followers
+    following_count = profile.following.count()  # Count the number of profiles this user is following
+
     print(profile)
     return render(request, 'profile/profile.html', {
         'profile': profile,
         'posts': posts,
+        'followers_count': followers_count,  # Add followers count to the context
+        'following_count': following_count,  # Add following count to the context
         # add photos : photos?
     })
 
