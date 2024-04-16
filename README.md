@@ -2,20 +2,20 @@
 
 Ruckus is a social networking platform where users can connect with friends, share updates, and discover new content.
 
-## Screenshot(s)
-![Landing Page](screenshots/landing_page.png)
-![Profile Page](screenshots/profile_page.png)
+## Screenshots
+![Feed Page](https://imgur.com/a/A78grkL.jpg)
+![Profile Page](https://imgur.com/a/I6guWci.png)
 
 ## Technologies Used
 - Django
 - HTML/CSS
 - JavaScript
 - PostgreSQL
-- 
+- Django Template Language
 
 ## Getting Started
 ### Deployed App
-[My Awesome App](https://deployedappphere.com/)
+[Ruckus](https://ruckus.onrender.com/)
 
 ### Trello Board
 [Trello Board](https://trello.com/b/dOaE9hTg/ruckus)
