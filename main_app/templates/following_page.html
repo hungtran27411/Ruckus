@@ -12,53 +12,12 @@
           {% else %}
           <p>No profile picture available</p>
           {% endif %}
-          <div class="timestamp">{{ post.created_at }}</div>
           {% if user.is_authenticated %}
           <a class="custom-link" href="{% url 'profile_detail' profile_id=post.profile.id %}">{% endif %}{{ post.profile }}</a>
         </h5>
-        <div class="card-body">
-          <div class="text-center"></div>
-          {{ post.content }}
-          {{ post.likes.count }}
-          {% if user.is_authenticated %}
-              {% if user.profile in post.likes.all %}
-  
-                  <form action="{% url 'unlike_post' post.id %}" method="post">
-                      {% csrf_token %}
-                      <button type="submit">Unlike</button>
-                  </form>
-              {% else %}
-                  <form action="{% url 'like_post' post.id %}" method="post">
-                      {% csrf_token %}
-                      <button type="submit">Like</button>
-                  </form>
-              {% endif %}
-          {% endif %}
-        </div>
-          {% if post.profile == user.profile %}
-          <div class="card-footer d-flex justify-content-end">
-            <div class="btn-group" role="group" aria-label="Edit or delete button group">
-              <button type="button" class="btn btn-outline-secondary btn-content">
-                <a href="{% url 'delete_post' pk=post.pk %}?delete_action=true">
-                  <span class="material-symbols-outlined utility">
-                    delete
-                  </span>
-                </a>
-              </button>
-              <button type="button" class="btn btn-outline-secondary btn-content">
-                <a href="{% url 'update_post' pk=post.pk %}?edit_action=true">
-                  <span class="material-symbols-outlined utility">
-                    edit
-                  </span>
-                </a>
-              </button>
-            </div>
-          </div>
-          {% endif %}
         </div>
       </div>
     </div>
-  </div>
 {% endfor %}
 {% endblock content %}
     
