@@ -158,7 +158,8 @@ def like_post(request, post_id):
         post_to_like = Post.objects.get(id=post_id)
         profile = request.user.profile
         post_to_like.likes.add(profile)
-        return redirect('home')
+        print(request.META.get('HTTP_REFERER'))
+        return redirect(request.META.get('HTTP_REFERER'))
     else:
         # Handle GET request
         return HttpResponseNotAllowed(['POST'])
@@ -169,7 +170,7 @@ def unlike_post(request, post_id):
         post_to_unlike = Post.objects.get(id=post_id)
         profile = request.user.profile
         post_to_unlike.likes.remove(profile)
-        return redirect('home')
+        return redirect(request.META.get('HTTP_REFERER'))
     else:
         # Handle GET request
         return HttpResponseNotAllowed(['POST'])
