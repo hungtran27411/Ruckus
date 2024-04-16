@@ -108,6 +108,14 @@ header {
   padding: 0.5rem;
 }
 
+.minor-text {
+  font-size: x-small;
+  color: #a6a6a6; /* Gray color */
+  top: 0;
+  right: 0;
+  padding: 0.5rem;
+}
+
 .container {
   max-width: 600px;
   margin: auto;
@@ -158,4 +166,38 @@ h1 {
 .btn-outline-primary {
   color: #1DA1F2;
   border-color: #1DA1F2;
+}
+
+.card-post-body {
+  display: flex;
+  justify-content: start; /* Align items to the start of the main axis */
+  align-items: center; /* Vertically align items in the middle */
+}
+
+.post-content {
+  /* Ensures text does not overflow the container */
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  hyphens: auto;
+}
+
+.likes-section {
+  display: flex;
+  align-items: center; /* Align the likes count and button vertically */
+  margin-left: auto; /* Pushes the section to the right */
+}
+
+.likes-count {
+  margin-right: 0.5rem; /* Space between the likes count and the button */
+}
+
+/* Style the forms to be inline with the likes count */
+.likes-section form {
+  display: inline;
+}
+
+.likes-section button {
+  white-space: nowrap;
+  padding: 0.375rem 0.75rem; /* Adjust the padding to your liking */
+  font-size: 0.875rem; /* Adjust the font size to your liking */
 }
