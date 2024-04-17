@@ -11,8 +11,12 @@ test2
 Ruckus is a social networking platform where users can connect with friends, share updates, and discover new content.
 
 ## Screenshots
-![Feed Page](https://imgur.com/a/A78grkL.jpg)
-![Profile Page](https://imgur.com/a/I6guWci.png)
+
+![Sign Up Page](https://imgur.com/mPrI3cC.png)
+
+![Feed Page](https://i.imgur.com/bYPCo1n.png)
+
+
 
 ## Technologies Used
 - Django

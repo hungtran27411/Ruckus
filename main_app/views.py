@@ -166,6 +166,7 @@ def like_post(request, post_id):
         post_to_like = Post.objects.get(id=post_id)
         profile = request.user.profile
         post_to_like.likes.add(profile)
+
         return redirect(request.META.get('HTTP_REFERER'))
     else:
         # Handle GET request
