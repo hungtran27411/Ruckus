@@ -39,9 +39,10 @@
             <small class="form-text text-muted">
               Password requirements:
               <ul>
-                {% for text in help_texts %}
-                  <li>{{ text }}</li>
-                {% endfor %}
+                <li>Your password cannot be too similar to your other personal information.</li>
+                <li>Your password must contain at least 8 characters.</li>
+                <li>Your password cannot be a commonly used password.</li>
+                <li>Your password cannot be entirely numeric.</li>
               </ul>
             </small>
           </div>
