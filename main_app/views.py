@@ -8,9 +8,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import ProfileForm, PostForm
 from django.urls import reverse_lazy, reverse
 # stuff for photo upload for aws
-import uuid # for random numbers (used in generating photo name)
-import boto3 # aws sdk that lets us talk to our s3 bucket
-import os # this lets us talk to the .env
+import uuid  # for random numbers (used in generating photo name)
+import boto3  # aws sdk that lets us talk to our s3 bucket
+import os  # this lets us talk to the .env
 from django.urls import reverse_lazy
 from django.conf import settings
 from django.utils.module_loading import import_string
@@ -19,9 +19,10 @@ from django.http import HttpResponseNotAllowed
 
 
 def home(request):
-    posts = Post.objects.order_by('-id')  # Retrieve posts in reverse chronological order based on id
+    # Retrieve posts in reverse chronological order based on id
+    posts = Post.objects.order_by('-id')
     profile = None  # Initialize profile variable
-    if request.user.is_authenticated:  
+    if request.user.is_authenticated:
         if request.method == 'POST':
             form = PostForm(request.POST)
             if form.is_valid():
@@ -54,8 +55,8 @@ def signup(request):
     else:
         user_form = UserCreationForm()
         profile_form = ProfileForm()
-        
-    help_texts = get_password_validators_help_texts()    
+
+    help_texts = get_password_validators_help_texts()
     return render(request, 'registration/signup.html', {
         'error_message': error_message,
         'user_form': user_form,
@@ -63,13 +64,16 @@ def signup(request):
         'help_texts': help_texts
     })
 
+
 @login_required
 def following_page(request):
     following_profiles = request.user.profile.following.all()
-    following_posts = Post.objects.filter(profile__in=following_profiles.order_by('-id'))
+    following_posts = Post.objects.filter(
+        profile__in=following_profiles.order_by('-id'))
     return render(request, 'following_page.html', {
         'following_posts': following_posts
     })
+
 
 class PostUpdate(LoginRequiredMixin, UpdateView):
     model = Post
@@ -89,7 +93,8 @@ def profile_detail(request, profile_id):
     profile = Profile.objects.get(id=profile_id)
     posts = Post.objects.filter(profile=profile).order_by('-id')
     followers_count = profile.followers.count()  # Count the number of followers
-    following_count = profile.following.count()  # Count the number of profiles this user is following
+    # Count the number of profiles this user is following
+    following_count = profile.following.count()
 
     print(profile)
     return render(request, 'profile/profile.html', {
@@ -100,18 +105,20 @@ def profile_detail(request, profile_id):
         # add photos : photos?
     })
 
+
 def add_user_photo(request, profile_id):
     photo_file = request.FILES.get('photo-file', None)
-    
+
     if photo_file:
         s3 = boto3.client('s3')
-        key = 'profile_photos/' + uuid.uuid4().hex[:6] + photo_file.name[photo_file.name.rfind('.'):]
-        
+        key = 'profile_photos/' + \
+            uuid.uuid4().hex[:6] + photo_file.name[photo_file.name.rfind('.'):]
+
         try:
             bucket = os.environ['S3_BUCKET']
             s3.upload_fileobj(photo_file, bucket, key)
             url = f"{os.environ['S3_BASE_URL']}{bucket}/{key}"
-            
+
             # Check if a photo already exists for the user
             photo, created = Photo.objects.get_or_create(profile_id=profile_id)
             photo.url = url
@@ -131,15 +138,17 @@ def get_password_validators_help_texts():
         help_texts.append(validator.get_help_text())
     return help_texts
 
+
 @login_required
 def follow_profile(request, profile_id):
     if request.method == 'POST':
         profile_to_follow = Profile.objects.get(id=profile_id)
         request.user.profile.following.add(profile_to_follow)
         return redirect('profile_detail', profile_id=profile_id)
-    else: 
+    else:
         return HttpResponseNotAllowed(['POST'])
-    
+
+
 @login_required
 def unfollow_profile(request, profile_id):
     if request.method == 'POST':
@@ -147,8 +156,9 @@ def unfollow_profile(request, profile_id):
         request.user.profile.following.remove(profile_to_unfollow)
         return redirect('profile_detail', profile_id=profile_id)
     else:
-        
+
         return HttpResponseNotAllowed(['POST'])
+
 
 @login_required
 def like_post(request, post_id):
@@ -156,10 +166,12 @@ def like_post(request, post_id):
         post_to_like = Post.objects.get(id=post_id)
         profile = request.user.profile
         post_to_like.likes.add(profile)
-        return redirect('home')
+
+        return redirect(request.META.get('HTTP_REFERER'))
     else:
         # Handle GET request
         return HttpResponseNotAllowed(['POST'])
+
 
 @login_required
 def unlike_post(request, post_id):
@@ -167,7 +179,7 @@ def unlike_post(request, post_id):
         post_to_unlike = Post.objects.get(id=post_id)
         profile = request.user.profile
         post_to_unlike.likes.remove(profile)
-        return redirect('home')
+        return redirect(request.META.get('HTTP_REFERER'))
     else:
         # Handle GET request
         return HttpResponseNotAllowed(['POST'])

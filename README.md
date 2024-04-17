@@ -1,4 +1,6 @@
 # <center>  Ruckus </center>
+=======
+# Ruckus
 
 Ruckus is a social networking platform where users can connect with friends, share updates, and discover new content.
 
@@ -13,7 +15,6 @@ Ruckus is a social networking platform where users can connect with friends, sha
     <img src="https://i.imgur.com/vQaARYW.png" alt="Feed Page">
 
 </details>
-
 
 
 ## <center> Technologies Used 🖥️</center>
@@ -33,5 +34,4 @@ Check out our deployed app [here](https://ruckus.onrender.com/)!
 [Trello Board](https://trello.com/b/dOaE9hTg/ruckus) (including icebox)
 
 [Pitch Deck](https://docs.google.com/presentation/d/1lsPoUY-z0o8GVEk7ymRP58x5uFgsO5xTogvQ-ouWkg8/edit#slide=id.p)
-
 

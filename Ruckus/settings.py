@@ -30,7 +30,7 @@ SECRET_KEY = 'django-insecure-4n=piph@bm#q4ap)28(3aiox-sz2t01u5ami0_p*hw^(uw*i$#
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['ruckus.onrender.com', 'localhost']
+ALLOWED_HOSTS = ['ruckus.onrender.com', 'localhost', '127.0.0.1']
 
 
 # Application definition
