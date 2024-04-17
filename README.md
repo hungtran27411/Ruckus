@@ -1,6 +1,4 @@
 # <center>  Ruckus </center>
-=======
-# Ruckus
 
 Ruckus is a social networking platform where users can connect with friends, share updates, and discover new content.
 
